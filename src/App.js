@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import ListTitle from "./components/listTitle/ListTitle";
+import UserList from "./components/user/UserList";
+import List from "./components/list/List";
+import Navi from "./components/navBar/Navi" 
+import { Button, Col, Container, Row } from "reactstrap";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <Container>
+        <Navi></Navi>
+        <Row>
+          <Col xs="4">
+            <ListTitle></ListTitle>
+          </Col>
+          <Col xs="4">
+            <List></List>
+          </Col>
+          <Col xs="4"> </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
