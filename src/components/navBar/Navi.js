@@ -1,19 +1,28 @@
-import React from 'react';
-import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
+import React from "react";
+import {
+  Nav,
+  NavItem,
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
+  NavLink,
+} from "reactstrap";
 
 export default class Example extends React.Component {
-  constructor(props) {
+ 
+  constructor(props) { 
     super(props);
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: false
+      dropdownOpen: false,
     };
   }
 
   toggle() {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      dropdownOpen: !this.state.dropdownOpen,
     });
   }
 
@@ -21,22 +30,28 @@ export default class Example extends React.Component {
     return (
       <div>
         <Nav tabs>
+
           <NavItem>
-            <NavLink href="#" active>List</NavLink>
+            <NavLink href="/" active>
+              My Lists
+            </NavLink>
           </NavItem>
+
           <NavItem>
-            <NavLink href="#">Link</NavLink>
+            <NavLink href="users" active>Users</NavLink>
           </NavItem>
-            <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle nav caret>
+
+          <Dropdown nav isOpen={this.state.dropdownOpen}  toggle={this.toggle}>
+            <DropdownToggle nav >
               Me
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem header>Profile</DropdownItem>
+                <NavLink href="profile" >Profile</NavLink>
               <DropdownItem divider />
-              <DropdownItem header>Setting</DropdownItem>
+              <NavLink href="setting" >Setting</NavLink>
             </DropdownMenu>
           </Dropdown>
+      
         </Nav>
       </div>
     );
