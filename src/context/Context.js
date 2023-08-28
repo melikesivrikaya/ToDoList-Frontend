@@ -16,7 +16,7 @@ export const ContextProvider = ({ children }) => {
   }, []);
 
   const values = {
-    currentUserId : 1,
+    currentUserId : 3,
     usersValues: {
       users,
       setUsers,
