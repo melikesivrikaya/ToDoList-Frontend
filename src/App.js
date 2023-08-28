@@ -1,25 +1,23 @@
 import "./App.css";
-import ListTitle from "./components/listTitle/ListTitle";
+import { Row, Col } from "reactstrap";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Lists from "./components/lists/Lists";
+import Navi from "./components/navBar/Navi";
 import UserList from "./components/user/UserList";
-import List from "./components/list/List";
-import Navi from "./components/navBar/Navi" 
-import { Button, Col, Container, Row } from "reactstrap";
+import Setting from './components/settings/Setting'
+import User from "./components/user/User";
 function App() {
   return (
-    <div className="App">
-      
-      <Container>
+    <div >
+      <BrowserRouter>
         <Navi></Navi>
-        <Row>
-          <Col xs="4">
-            <ListTitle></ListTitle>
-          </Col>
-          <Col xs="4">
-            <List></List>
-          </Col>
-          <Col xs="4"> </Col>
-        </Row>
-      </Container>
+        <Routes>
+          <Route path="/" Component={Lists}></Route>
+          <Route path="users" Component={UserList}></Route>
+          <Route path="setting" Component={Setting}></Route>
+          <Route path="profile" Component={User}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
