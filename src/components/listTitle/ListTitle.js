@@ -7,10 +7,10 @@ import axios from "axios";
 export default function ListTitle({ listTitle }) {
   const [isNewTask, setIsNewTask] = useState(false);
   const [newTaskID, setNewTaskId] = useState();
-  const [deleteTaskID, setDeleteTaskId] = useState();
   const { currentUserId } = useValues();
   const [task, setTask] = useState("");
   const [isOpenNewTask, setIsOpenNewTask] = useState(false);
+
   const postTask = () => {
     const userId = currentUserId;
     const listNameId = newTaskID;
@@ -35,7 +35,6 @@ export default function ListTitle({ listTitle }) {
         console.error("Hata:", error);
       });
   };
-
   function handleDelete(itemId) {
     {
       console.log(itemId);
@@ -51,15 +50,15 @@ export default function ListTitle({ listTitle }) {
   }
   function deleteListTitle(itemId) {
     console.log(itemId);
-  axios
-    .delete(`http://localhost:2020/listtitles/listtitle?id=${itemId}`)
-    .then((response) => {
-      console.log("Silme işlemi başarılı:", response.data);
-    })
-    .catch((error) => {
-      console.error("Silme işlemi hatası:", error);
-    });
-}
+    axios
+      .delete(`http://localhost:2020/listtitles/listtitle?id=${itemId}`)
+      .then((response) => {
+        console.log("Silme işlemi başarılı:", response.data);
+      })
+      .catch((error) => {
+        console.error("Silme işlemi hatası:", error);
+      });
+  }
   return (
     <div>
       <ListGroupItem action key={listTitle.id} color={"success"}>
@@ -75,15 +74,17 @@ export default function ListTitle({ listTitle }) {
           <Button color="light" size="sm">
             New Task
           </Button>
-        
-        </Link>  
+        </Link>
 
-          <Button color="danger" size="sm" onClick={(i) => {
+        <Button
+          color="danger"
+          size="sm"
+          onClick={(i) => {
             deleteListTitle(listTitle.id);
-          }}>
-            X
-          </Button>
-
+          }}
+        >
+          X
+        </Button>
       </ListGroupItem>
 
       {isNewTask && listTitle.id === newTaskID && isOpenNewTask ? (

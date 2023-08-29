@@ -20,11 +20,45 @@ import { Link } from "react-router-dom";
 export default function User() {
   const { currentUserId } = useValues();
   const [user, setUser] = useState();
+  const [userId,setUserId] = useState();
+  const [friendId,setFriendId] = useState();
+  const [name,setName] = useState();
+  const [id,setId] = useState();
+
   useEffect(() => {
     axios(`http://localhost:2020/users/user?id=${currentUserId}`).then((res) =>
       setUser(res.data)
     );
   }, []);
+
+
+  const acceptFriend = (f ) => {
+    setUserId(f.userId)
+    setFriendId(f.friendId)
+    setName(f.name)
+    setId(f.id)
+    const postData = {
+      id,
+      friendId,
+      userId,
+      name ,
+      friendState : 0
+    };
+    console.log(postData);
+    axios
+      .post("http://localhost:2020/friends", postData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
+  }
+  
   return (
     <div>
       <Container>
@@ -68,7 +102,7 @@ export default function User() {
                 {user?.friendList.map((f) =>
                   f.friendState === "SUCCESS" ? (
                     <ListGroupItem>
-                      <Link>
+                      <Link to={`/${f.id}`}>
                         <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
                       </Link>
                     </ListGroupItem>
@@ -87,7 +121,7 @@ export default function User() {
                   f.friendState === "WAIT" ? (
                     <ListGroupItem>
                       <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
-                      <Button color="success"> Kabul Et</Button>
+                      <Button onClick={() => acceptFriend(f)} color="success"> Kabul Et</Button>
                       <Button color="danger"> Red Et</Button>
                     </ListGroupItem>
                   ) : (

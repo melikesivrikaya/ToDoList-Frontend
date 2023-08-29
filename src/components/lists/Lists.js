@@ -1,52 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useValues } from "../../context/Context";
 import "../../App.css";
 import {
   ListGroup,
-  ListGroupItem,
   Container,
   Row,
   Col,
-  ListInlineItem,
   Input,
   Label,
-  Button,Alert
+  Button,
+  Alert,
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import ListTitle from "../listTitle/ListTitle";
 import axios from "axios";
 
 export default function Lists() {
   const { listTitleValues } = useValues();
   const { currentUserId } = useValues();
-  let [listName, setListName] = useState("");
+  const [listName, setListName] = useState("");
+  const [userId, setUserId] = useState();
 
   const postListTitle = () => {
-    const userId = currentUserId;
+    
+    setUserId(currentUserId);
+
     const postData = {
       listName,
       userId,
     };
     console.log(postData);
-    axios
-      .post("http://localhost:2020/listtitles", postData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-      });
+    // axios
+    //   .post("http://localhost:2020/listtitles", postData, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Hata:", error);
+    //   });
   };
+
+  useEffect(() => {
+    setListName("");
+  }, [setUserId]);
 
   return (
     <Container>
-       <Alert color="danger">
-        Listelerim ...
-      </Alert>
+      <Alert color="danger">Listelerim ...</Alert>
       <Row>
         <Col>
           <ListGroup>
@@ -63,8 +66,8 @@ export default function Lists() {
             type="text"
             onChange={(i) => setListName(i.target.value)}
           ></Input>
+
           <Button onClick={postListTitle}>Create List Name</Button>
-          <h4>{listName}</h4>
         </Col>
       </Row>
     </Container>
