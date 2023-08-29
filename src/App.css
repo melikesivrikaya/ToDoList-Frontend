@@ -1,0 +1,9 @@
+.user-card{
+          display: flex;
+}
+.context{
+          margin-left: 30px;
+}
+.cart{
+          margin: 10px;
+}

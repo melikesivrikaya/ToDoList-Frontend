@@ -13,9 +13,10 @@ import {
   ListGroupItem,
   ListGroupItemHeading,
   ListGroupItemText,
-  ListGroup
+  ListGroup,
+  Button,
 } from "reactstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 export default function User() {
   const { currentUserId } = useValues();
   const [user, setUser] = useState();
@@ -30,7 +31,7 @@ export default function User() {
         <Card inverse>
           <CardImg
             alt="Card image cap"
-            src="https://picsum.photos/900/270?grayscale"
+            src="https://picsum.photos/900/270"
             style={{
               height: 270,
             }}
@@ -64,11 +65,17 @@ export default function User() {
             <h4>Arkadaşlar</h4>
             <ListGroup>
               <ListGroupItemText>
-                {user?.friendList.map((f) => ( f.friendState === "SUCCESS" ?
-                  <ListGroupItem>
-                    <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
-                  </ListGroupItem> : <div></div>
-                ))}
+                {user?.friendList.map((f) =>
+                  f.friendState === "SUCCESS" ? (
+                    <ListGroupItem>
+                      <Link>
+                        <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
+                      </Link>
+                    </ListGroupItem>
+                  ) : (
+                    <div></div>
+                  )
+                )}
               </ListGroupItemText>
             </ListGroup>
           </Col>
@@ -76,13 +83,17 @@ export default function User() {
             <h4>İstekler</h4>
             <ListGroup>
               <ListGroupItemText>
-                {user?.friendList.map((f) => ( 
-                  f.friendState ==="WAIT" ?
-                  <ListGroupItem>
-                    <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
-                    <Link>Kabul Et</Link>
-                  </ListGroupItem> : <div></div>
-                ))}
+                {user?.friendList.map((f) =>
+                  f.friendState === "WAIT" ? (
+                    <ListGroupItem>
+                      <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
+                      <Button color="success"> Kabul Et</Button>
+                      <Button color="danger"> Red Et</Button>
+                    </ListGroupItem>
+                  ) : (
+                    <div></div>
+                  )
+                )}
               </ListGroupItemText>
             </ListGroup>
           </Col>

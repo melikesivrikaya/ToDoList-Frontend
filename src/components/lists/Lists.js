@@ -10,7 +10,7 @@ import {
   ListInlineItem,
   Input,
   Label,
-  Button,
+  Button,Alert
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ListTitle from "../listTitle/ListTitle";
@@ -41,20 +41,12 @@ export default function Lists() {
         console.error("Hata:", error);
       });
   };
-  function deleteListTitle(itemId) {
-      console.log(itemId);
-    
-    // axios
-    //   .delete(`http://localhost:2020/listtitles/listtitle?id=${itemId}`)
-    //   .then((response) => {
-    //     console.log("Silme işlemi başarılı:", response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Silme işlemi hatası:", error);
-    //   });
-  }
+
   return (
     <Container>
+       <Alert color="danger">
+        Listelerim ...
+      </Alert>
       <Row>
         <Col>
           <ListGroup>
