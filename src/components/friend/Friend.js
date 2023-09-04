@@ -11,20 +11,17 @@ import {
 export default function Friend() {
   const { id } = useParams();
   const [friend, setFriend] = useState();
-  const [friendList, setFriendList] = useState();
+  const [friendListAll, setFriendListAll] = useState();
 
   useEffect(() => {
     axios(`http://localhost:2020/users/user?id=${id}`).then((res) =>
       setFriend(res.data)
     );
-    getUserList();
-  },[]);
-
-  const getUserList = () => {
     axios(`  http://localhost:2020/listtitles/${id}`).then((res) =>
-      setFriendList(res.data)
+      setFriendListAll(res.data)
     );
-  };
+  }, []);
+
   return (
     <Container>
       <Row>
@@ -51,11 +48,13 @@ export default function Friend() {
             <h1>Friend's List</h1>
 
             <ListGroup>
-              {friendList?.map((l) => (
+              {friendListAll?.map((l) => (
                 <ListGroupItem color="info">
                   {l.listName}
                   {l.listResponce.map((r) => (
-                    <ListGroupItem color="light">{r.task}</ListGroupItem>
+                    <ListGroupItem key={r.id} color="light">
+                      {r.task}
+                    </ListGroupItem>
                   ))}
                 </ListGroupItem>
               ))}
@@ -63,7 +62,16 @@ export default function Friend() {
           </Container>
         </Col>
         <Col xs="5">
-          <h1>Friend's Friend</h1>
+          <ListGroup>
+            <h1>Friend's Friend</h1>
+            {friend?.friendList.map((ff) =>
+              ff.friendState !== "WAIT" ? (
+                <ListGroupItem key={ff.id}>{ff.name}</ListGroupItem>
+              ) : (
+                <div></div>
+              )
+            )}
+          </ListGroup>
         </Col>
       </Row>
     </Container>

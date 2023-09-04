@@ -1,57 +1,35 @@
 import React from "react";
-import {
-  Nav,
-  NavItem,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-  NavLink,
-} from "reactstrap";
-
+import { Nav, NavItem, NavLink } from "reactstrap";
+import "../../css/Navi.css";
 export default class Example extends React.Component {
- 
-  constructor(props) { 
+  constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-    };
-  }
-
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen,
-    });
   }
 
   render() {
     return (
-      <div>
-        <Nav tabs>
+      <div className="navi-container">
+        <Nav tabs fill>
 
           <NavItem>
-            <NavLink href="/" active>
-              My Lists
-            </NavLink>
+            <NavLink href="/">My Lists</NavLink>
           </NavItem>
 
           <NavItem>
-            <NavLink href="users" active>Users</NavLink>
+            <NavLink href="users">Users</NavLink>
           </NavItem>
 
-          <Dropdown nav isOpen={this.state.dropdownOpen}  toggle={this.toggle}>
-            <DropdownToggle nav >
-              Me
-            </DropdownToggle>
-            <DropdownMenu>
-                <NavLink href="profile" >Profile</NavLink>
-              <DropdownItem divider />
-              <NavLink href="setting" >Setting</NavLink>
-            </DropdownMenu>
-          </Dropdown>
-      
+          <NavItem>
+            <NavLink href="profile">Profile</NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink href="profile">Logout / Login</NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink href="setting">Setting</NavLink>
+          </NavItem>
         </Nav>
       </div>
     );

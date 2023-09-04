@@ -1,0 +1,37 @@
+
+
+.list-title-card{
+          background-color: hwb(354 68% 5%);
+          padding: 10px;
+}.list-container{
+          padding: 10px;
+          margin: 10px;
+          justify-content: space-around;
+}
+.create-list{
+          margin: 20px;
+          display: flex;
+          padding: 10px;
+}
+.list-title-container{
+          display: flex !important;
+          justify-content: space-between;
+          padding: 10px;
+
+          width: 100%;
+          
+}
+.cretae-task{
+          display: flex;
+          padding: 10px;
+}
+.delete-button{
+          margin-right: 10px;
+}
+.list-task-item{
+          justify-content: space-between;
+          display: flex;
+}
+.task-input{
+          border-color: red !important;
+}

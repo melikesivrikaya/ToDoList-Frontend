@@ -1,0 +1,15 @@
+.user-cart{
+          padding: 20px;
+          width: 400px;
+          margin: 15px;
+}
+.user-img{
+          margin-bottom: 10px;
+}
+.user-list-container{
+          display: flex;
+          flex-wrap: wrap;
+          background-color:#a3cfbb;
+          align-items: center;
+    
+}

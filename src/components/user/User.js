@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useValues } from "../../context/Context";
 import axios from "axios";
 import {
   Card,
@@ -18,35 +17,34 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 export default function User() {
-  const { currentUserId } = useValues();
+    const currentUserId = 1;
   const [user, setUser] = useState();
-  const [userId,setUserId] = useState();
-  const [friendId,setFriendId] = useState();
-  const [name,setName] = useState();
-  const [id,setId] = useState();
+
+  const [id, setId] = useState();
+  const [complate, setComplate] = useState();
+  const [complated, setComplated] = useState();
 
   useEffect(() => {
-    axios(`http://localhost:2020/users/user?id=${currentUserId}`).then((res) =>
-      setUser(res.data)
-    );
+    console.log("geldi");
+    axios(`http://localhost:2020/users/user?id=${currentUserId}`)
+    .then((res) => setUser(res.data)
+    ).then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
   }, []);
 
-
-  const acceptFriend = (f ) => {
-    setUserId(f.userId)
-    setFriendId(f.friendId)
-    setName(f.name)
-    setId(f.id)
-    const postData = {
+  const acceptFriend = (f) => {
+    setId(f.id);
+    const putData = {
       id,
-      friendId,
-      userId,
-      name ,
-      friendState : 0
+      friendState: 0,
     };
-    console.log(postData);
+    console.log(putData);
     axios
-      .post("http://localhost:2020/friends", postData, {
+      .put("http://localhost:2020/friends", putData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -57,8 +55,20 @@ export default function User() {
       .catch((error) => {
         console.error("Hata:", error);
       });
-  }
-  
+  };
+
+  const rejectFriend = (f) => {
+    setId(f.id);
+    console.log(f);
+    // axios.delete(`http://localhost:2020/friends/${id}`)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Hata:", error);
+    //   });
+  };
+
   return (
     <div>
       <Container>
@@ -102,7 +112,7 @@ export default function User() {
                 {user?.friendList.map((f) =>
                   f.friendState === "SUCCESS" ? (
                     <ListGroupItem>
-                      <Link to={`/${f.id}`}>
+                      <Link to={`/${f.userId}`}>
                         <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
                       </Link>
                     </ListGroupItem>
@@ -118,11 +128,17 @@ export default function User() {
             <ListGroup>
               <ListGroupItemText>
                 {user?.friendList.map((f) =>
-                  f.friendState === "WAIT" ? (
+                  f.friendState === "REQUEST" ? (
                     <ListGroupItem>
                       <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
-                      <Button onClick={() => acceptFriend(f)} color="success"> Kabul Et</Button>
-                      <Button color="danger"> Red Et</Button>
+                      <Button onClick={() => acceptFriend(f)} color="success">
+                        {" "}
+                        Kabul Et
+                      </Button>
+                      <Button onClick={() => rejectFriend(f)} color="danger">
+                        {" "}
+                        Red Et
+                      </Button>
                     </ListGroupItem>
                   ) : (
                     <div></div>

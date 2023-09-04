@@ -1,75 +1,78 @@
 import React, { useEffect, useState } from "react";
-import { useValues } from "../../context/Context";
-import "../../App.css";
-import {
-  ListGroup,
-  Container,
-  Row,
-  Col,
-  Input,
-  Label,
-  Button,
-  Alert,
-} from "reactstrap";
-import ListTitle from "../listTitle/ListTitle";
+import "../../css/List.css";
+import { Container, Input, Label, Button, Alert } from "reactstrap";
+import ListTitle from "./ListTitle";
 import axios from "axios";
 
 export default function Lists() {
-  const { listTitleValues } = useValues();
-  const { currentUserId } = useValues();
+  const currentUserId = 2;
+  const [lists, setList] = useState();
+  const [text, setText] = useState("");
   const [listName, setListName] = useState("");
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(1);
+  const [response, setResponse] = useState({});
+
+  useEffect(() => {
+    axios(`http://localhost:2020/listtitles/${currentUserId}`).then((res) =>
+      setList(res.data)
+    );
+  }, [response]);
+  
+  useEffect(() => {
+    postListTitle();
+    setText("");
+  }, [listName]);
+  
+  useEffect(() => {
+    setUserId(currentUserId);
+  }, []);
 
   const postListTitle = () => {
-    
-    setUserId(currentUserId);
-
     const postData = {
       listName,
       userId,
     };
-    console.log(postData);
-    // axios
-    //   .post("http://localhost:2020/listtitles", postData, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Hata:", error);
-    //   });
+    axios
+      .post("http://localhost:2020/listtitles", postData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setResponse(response);
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
   };
-
-  useEffect(() => {
-    setListName("");
-  }, [setUserId]);
 
   return (
     <Container>
       <Alert color="danger">Listelerim ...</Alert>
-      <Row>
-        <Col>
-          <ListGroup>
-            {listTitleValues.listTitle?.map((listTitle) => (
-              <div>
-                <ListTitle listTitle={listTitle}></ListTitle>
-              </div>
-            ))}
-          </ListGroup>
-        </Col>
-        <Col>
-          <Label>List Name</Label>
-          <Input
-            type="text"
-            onChange={(i) => setListName(i.target.value)}
-          ></Input>
+      <div className="create-list">
+        <Label>List Name</Label>
 
-          <Button onClick={postListTitle}>Create List Name</Button>
-        </Col>
-      </Row>
+        <Input
+          bsSize="sm"
+          type="text"
+          value={text}
+          onChange={(i) => setText(i.target.value)}
+        ></Input>
+
+        <Button onClick={(i) => setListName(text)} color="light">
+          Create List Name
+        </Button>
+      </div>
+
+      {lists?.map((l, index) => (
+        <ListTitle
+          Lists={l}
+          index={index}
+          setList={setList}
+          id={userId}
+          setResponse={setResponse}
+        ></ListTitle>
+      ))}
     </Container>
   );
 }
