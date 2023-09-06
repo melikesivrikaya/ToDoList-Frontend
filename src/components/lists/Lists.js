@@ -5,7 +5,7 @@ import ListTitle from "./ListTitle";
 import axios from "axios";
 
 export default function Lists() {
-  const currentUserId = 2;
+  const currentUserId = 202;
   const [lists, setList] = useState();
   const [text, setText] = useState("");
   const [listName, setListName] = useState("");

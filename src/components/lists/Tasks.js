@@ -46,10 +46,12 @@ export default function Tasks({ listResponce, setResponse }) {
     <div>
       <Row className="list-container">
         <Col className="list-title-card" xs="5">
-          <h5>Yapılacaklar</h5>
+           <h6 className="list-title-card-title">Yapılacaklar</h6>
           {listResponce.map((li) =>
             li.state == false ? (
+             
               <div>
+                
                 <ListGroupItem action key={li.id}>
                   <div className="list-task-item">
                     <div>
@@ -81,12 +83,14 @@ export default function Tasks({ listResponce, setResponse }) {
         </Col>
 
         <Col className="list-title-card" xs="5">
-          <h5>Tamamlananlar</h5>
+        <h6 className="list-title-card-title">Tamamlananlar</h6>
           {listResponce.map((li) =>
             li.state == true ? (
               <div>
+                  
                 <ListGroupItem action key={li.id}>
                   <div className="list-task-item">
+                    
                     <div>
                       {" "}
                       <Button

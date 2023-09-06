@@ -14,10 +14,11 @@ import {
   ListGroupItemText,
   ListGroup,
   Button,
+  Alert,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 export default function User() {
-    const currentUserId = 1;
+  const currentUserId = 202;
   const [user, setUser] = useState();
 
   const [id, setId] = useState();
@@ -27,8 +28,8 @@ export default function User() {
   useEffect(() => {
     console.log("geldi");
     axios(`http://localhost:2020/users/user?id=${currentUserId}`)
-    .then((res) => setUser(res.data)
-    ).then((response) => {
+      .then((res) => setUser(res.data))
+      .then((response) => {
         console.log(response.data);
       })
       .catch((error) => {
@@ -43,18 +44,18 @@ export default function User() {
       friendState: 0,
     };
     console.log(putData);
-    axios
-      .put("http://localhost:2020/friends", putData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-      });
+    // axios
+    //   .put("http://localhost:2020/friends", putData, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Hata:", error);
+    //   });
   };
 
   const rejectFriend = (f) => {
@@ -72,25 +73,20 @@ export default function User() {
   return (
     <div>
       <Container>
-        <Card inverse>
-          <CardImg
+      
+
+        <Row>
+          <Col xs="3"> 
+          <CardImg style={{borderRadius : 20}}
             alt="Card image cap"
-            src="https://picsum.photos/900/270"
-            style={{
-              height: 270,
-            }}
+            src={`${user?.profilFotoUrl}`}
             width="100%"
           />
-          <CardImgOverlay>
-            <CardText>
-              <small className="text-muted">{user?.name}</small>
-            </CardText>
-          </CardImgOverlay>
-        </Card>
-        <Row>
-          <Col>
-            <h4>Kişisel Bilgiler</h4>
-            <ListGroup>
+            <Alert color="info">{"My Account"}</Alert>
+            <Alert color="danger">{user?.name}</Alert>{" "}
+            <Alert color="danger">{"28"}</Alert>
+            <Alert color="danger">{user?.address}</Alert>
+            {/* <ListGroup>
               <ListGroupItem>
                 <ListGroupItemHeading>Ad Soyad</ListGroupItemHeading>
                 <ListGroupItemText>{user?.name}</ListGroupItemText>
@@ -103,17 +99,23 @@ export default function User() {
                 <ListGroupItemHeading>Yaş</ListGroupItemHeading>
                 <ListGroupItemText>34</ListGroupItemText>
               </ListGroupItem>
-            </ListGroup>
+            </ListGroup> */}
           </Col>
           <Col>
-            <h4>Arkadaşlar</h4>
-            <ListGroup>
+            {/* //<Alert color="info">{user?.name + " Friends"}</Alert> */}
+            <Alert color="info">{"My Galeries"}</Alert>
+            {/* <ListGroup>
               <ListGroupItemText>
                 {user?.friendList.map((f) =>
                   f.friendState === "SUCCESS" ? (
-                    <ListGroupItem>
-                      <Link to={`/${f.userId}`}>
-                        <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
+                    <ListGroupItem color="warning" action>
+                      <Link
+                        to={`/${f.userId}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <ListGroupItemHeading style={{ color: "gray" }}>
+                          {f.name}
+                        </ListGroupItemHeading>{" "}
                       </Link>
                     </ListGroupItem>
                   ) : (
@@ -121,17 +123,33 @@ export default function User() {
                   )
                 )}
               </ListGroupItemText>
-            </ListGroup>
+            </ListGroup> */}
           </Col>
-          <Col>
-            <h4>İstekler</h4>
+
+          <Col xs="3">
+            <Alert color="info">{"My Friends Request"}</Alert>
             <ListGroup>
               <ListGroupItemText>
                 {user?.friendList.map((f) =>
                   f.friendState === "REQUEST" ? (
-                    <ListGroupItem>
-                      <ListGroupItemHeading>{f.name}</ListGroupItemHeading>{" "}
-                      <Button onClick={() => acceptFriend(f)} color="success">
+                    <ListGroupItem color="warning"
+                      action
+                      style={{ marginBottom: 20}}
+                    >
+                      <ListGroupItemHeading>
+                        <Link
+                          to={`/${f.userId}`}
+                          style={{ textDecoration: "none", color: "gray" }}
+                        >
+                          {" "}
+                          {f.name}
+                        </Link>
+                      </ListGroupItemHeading>{" "}
+                      <Button
+                        style={{ marginRight: 10 }}
+                        onClick={() => acceptFriend(f)}
+                        color="success"
+                      >
                         {" "}
                         Kabul Et
                       </Button>

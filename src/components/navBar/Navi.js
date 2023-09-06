@@ -1,37 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import "../../css/Navi.css";
-export default class Example extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render() {
-    return (
-      <div className="navi-container">
-        <Nav tabs fill>
+export default function Navi() {
+  const [activeTab , setActiveTab] = useState("Profile")
 
-          <NavItem>
-            <NavLink href="/">My Lists</NavLink>
-          </NavItem>
+  return (
+    <div className="navi-container">
+    <Nav tabs fill>
+      <NavItem>
+        <NavLink 
+          href="/"
+          active={activeTab === "My Lists"}
+          style={{ color: "pink", fontWeight: "bold" }}
+       
+        >
+          My Lists
+        </NavLink>
+      </NavItem>
 
-          <NavItem>
-            <NavLink href="users">Users</NavLink>
-          </NavItem>
+      <NavItem>
+        <NavLink
+          active={activeTab === "Users"}
 
-          <NavItem>
-            <NavLink href="profile">Profile</NavLink>
-          </NavItem>
+          href="users"
+          style={{ color: "pink", fontWeight: "bold" }}
+        >
+          Users
+        </NavLink>
+      </NavItem>
 
-          <NavItem>
-            <NavLink href="profile">Logout / Login</NavLink>
-          </NavItem>
+      <NavItem>
+        <NavLink
+          active={activeTab === "Profile"}
+          href="profile"
+     
+          style={{ color: "pink", fontWeight: "bold" }}
+        >
+          Profile
+        </NavLink>
+      </NavItem>
 
-          <NavItem>
-            <NavLink href="setting">Setting</NavLink>
-          </NavItem>
-        </Nav>
-      </div>
-    );
-  }
+      {/* <NavItem>
+        <NavLink href="profile">Logout / Login</NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink href="setting">Setting</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="/">{this.props.user?.name}</NavLink>
+      </NavItem> */}
+    </Nav>
+  </div>
+  )
 }
+

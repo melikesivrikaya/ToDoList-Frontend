@@ -3,7 +3,13 @@
 .list-title-card{
           background-color: hwb(354 68% 5%);
           padding: 10px;
-}.list-container{
+}
+.list-title-card-title{
+          color: white;
+          text-align: center;
+          margin: 5px;
+}
+.list-container{
           padding: 10px;
           margin: 10px;
           justify-content: space-around;
@@ -19,7 +25,13 @@
           padding: 10px;
 
           width: 100%;
+ 
           
+}
+.list-title-item{
+          text-decoration: none;
+          color: gray;
+          font-weight: bold;
 }
 .cretae-task{
           display: flex;

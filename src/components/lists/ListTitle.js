@@ -9,7 +9,7 @@ export default function ListTitle({ Lists, index, setResponse, id }) {
   const [newTaskID, setNewTaskId] = useState();
   const [task, setTask] = useState("");
 
-  const [isNewTask, setIsNewTask] = useState(false);
+  const [isNewTask, setIsNewTask] = useState(true);
   const [isOpenNewTask, setIsOpenNewTask] = useState(false);
   const [isOpenTasks, setIsOpenTasks] = useState(true);
   const [delListTitle, setDelListTitle] = useState(false);
@@ -72,7 +72,7 @@ export default function ListTitle({ Lists, index, setResponse, id }) {
           >
             X
           </Button>
-          <Link onClick={() => setIsOpenTasks(!isOpenTasks)}>
+          <Link className="list-title-item" onClick={() => setIsOpenTasks(!isOpenTasks)}>
             {Lists.listName}
           </Link>
           <Link
