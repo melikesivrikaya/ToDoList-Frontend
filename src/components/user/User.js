@@ -78,6 +78,7 @@ export default function User() {
             />
             <Alert color="info">{"My Account"}</Alert>
             <Alert color="danger">{user?.name}</Alert>{" "}
+            <Alert color="danger">{user?.title}</Alert>
             <Alert color="danger">{"28"}</Alert>
             <Alert color="danger">{user?.address}</Alert>
             {/* <ListGroup>

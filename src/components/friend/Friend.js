@@ -35,9 +35,10 @@ export default function Friend() {
               src={`${friend?.profilFotoUrl}`}
            
             />
-            <Alert color="danger">{friend?.name}</Alert>
+            <Alert color="danger">{friend?.name}</Alert><Alert color="danger">{friend?.title}</Alert>
             <Alert color="danger">{31}</Alert>
             <Alert color="danger">{friend?.address}</Alert>
+            
             {/* <ListGroup>
               <ListGroup>
                 <ListGroupItem>

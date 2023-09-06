@@ -97,7 +97,7 @@ export default function UserList() {
                         {" "}
                         {u.name}
                       </CardTitle>
-                      <CardSubtitle>Title : </CardSubtitle>
+                      <CardSubtitle>Title : {u.title}</CardSubtitle>
                       <CardText>{u.address}</CardText>
 
                       {/* // backendden zaten sadece SENTED_REQUEST yada null geliyor */}
