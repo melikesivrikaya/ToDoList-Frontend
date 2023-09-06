@@ -20,68 +20,62 @@ import { Link } from "react-router-dom";
 export default function User() {
   const currentUserId = 202;
   const [user, setUser] = useState();
-
-  const [id, setId] = useState();
-  const [complate, setComplate] = useState();
-  const [complated, setComplated] = useState();
+  const [response, setResponse] = useState();
 
   useEffect(() => {
-    console.log("geldi");
     axios(`http://localhost:2020/users/user?id=${currentUserId}`)
       .then((res) => setUser(res.data))
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
       })
       .catch((error) => {
         console.error("Hata:", error);
       });
-  }, []);
+  }, [response]);
 
   const acceptFriend = (f) => {
-    setId(f.id);
     const putData = {
-      id,
-      friendState: 0,
+      id : f.id,
+      friendState: 0
     };
     console.log(putData);
-    // axios
-    //   .put("http://localhost:2020/friends", putData, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Hata:", error);
-    //   });
+    axios
+      .put("http://localhost:2020/friends", putData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setResponse(response)
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
   };
 
   const rejectFriend = (f) => {
-    setId(f.id);
-    console.log(f);
-    // axios.delete(`http://localhost:2020/friends/${id}`)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Hata:", error);
-    //   });
+    axios
+      .delete(`http://localhost:2020/friends/${f.id}`)
+      .then((response) => {
+        console.log(response.data);
+        setResponse(response);
+      })
+      .catch((error) => {
+        console.error("Hata:", error);
+      });
   };
 
   return (
     <div>
       <Container>
-      
-
         <Row>
-          <Col xs="3"> 
-          <CardImg style={{borderRadius : 20}}
-            alt="Card image cap"
-            src={`${user?.profilFotoUrl}`}
-            width="100%"
-          />
+          <Col xs="3">
+            <CardImg
+              style={{ borderRadius: 20 }}
+              alt="Card image cap"
+              src={`${user?.profilFotoUrl}`}
+              width="100%"
+            />
             <Alert color="info">{"My Account"}</Alert>
             <Alert color="danger">{user?.name}</Alert>{" "}
             <Alert color="danger">{"28"}</Alert>
@@ -132,9 +126,10 @@ export default function User() {
               <ListGroupItemText>
                 {user?.friendList.map((f) =>
                   f.friendState === "REQUEST" ? (
-                    <ListGroupItem color="warning"
+                    <ListGroupItem
+                      color="warning"
                       action
-                      style={{ marginBottom: 20}}
+                      style={{ marginBottom: 20 }}
                     >
                       <ListGroupItemHeading>
                         <Link
