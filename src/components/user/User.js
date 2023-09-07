@@ -20,10 +20,11 @@ import { Link } from "react-router-dom";
 export default function User() {
   const currentUserId = 202;
   const [user, setUser] = useState();
+  const [gallery , setGallery] = useState();
   const [response, setResponse] = useState();
 
-  useEffect(() => {
-    axios(`http://localhost:2020/users/user?id=${currentUserId}`)
+const getUser = () => {
+   axios(`http://localhost:2020/users/user?id=${currentUserId}`)
       .then((res) => setUser(res.data))
       .then((response) => {
         console.log(response);
@@ -31,6 +32,20 @@ export default function User() {
       .catch((error) => {
         console.error("Hata:", error);
       });
+}
+const getGallery = () => {
+  axios(`http://localhost:2020/gallery/${currentUserId}`)
+  .then((res) => setGallery(res.data))
+  .then((response) => {
+    setResponse(response)
+  })
+  .catch((error) => {
+    console.error("Hata:", error);
+  });
+}
+  useEffect(() => {
+   getUser()
+   getGallery()
   }, [response]);
 
   const acceptFriend = (f) => {
@@ -119,6 +134,18 @@ export default function User() {
                 )}
               </ListGroupItemText>
             </ListGroup> */}
+            <div className="gallery-list">
+               {gallery?.map(g => (
+                  <CardImg
+                  style={{ borderRadius: 20 , margin : 8 , width : 180}}
+                  src={`${g.fotoUrl}`}
+                  width={200}
+                  height={200}
+                />
+            ))}
+            </div>
+           
+
           </Col>
 
           <Col xs="3">
