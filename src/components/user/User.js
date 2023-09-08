@@ -70,7 +70,7 @@ const getGallery = () => {
 
   const rejectFriend = (f) => {
     axios
-      .delete(`http://localhost:2020/friends/${f.id}`)
+      .delete(`http://localhost:2020/friends/pair/${f.id}`)
       .then((response) => {
         console.log(response.data);
         setResponse(response);

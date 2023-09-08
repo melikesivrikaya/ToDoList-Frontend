@@ -23,8 +23,7 @@ export default function UserList() {
 
   useEffect(() => {
     // User List
-    axios(`http://localhost:2020/users/${currentUserId}`)
-    .then((res) =>
+    axios(`http://localhost:2020/users/${currentUserId}`).then((res) =>
       setUsers(res.data)
     );
   }, [response]);
@@ -82,41 +81,45 @@ export default function UserList() {
             <div className="user-list-container">
               {users?.map((u, index) =>
                 u.id != currentUserId ? (
-                  <Card key={index} className="user-cart">
-                    <div className="user-img">
-                      <CardImg
-                        top
-                        width={"200"}
-                        height={"300"}
-                        src={`${u.profilFotoUrl}`}
-                        alt="Card image cap"
-                      />
-                    </div>
-                    <div>
-                      <CardTitle style={{ fontWeight: "bold" }}>
-                        {" "}
-                        {u.name}
-                      </CardTitle>
-                      <CardSubtitle>Title : {u.title}</CardSubtitle>
-                      <CardText>{u.address}</CardText>
+                  <div >
+                    <Card key={index} className="user-cart">
+                      <div className="user-img">
+                        <Link to={`/${u.id}`}>   <CardImg
+                          top
+                          width={"200"}
+                          height={"300"}
+                          src={`${u.profilFotoUrl}`}
+                          alt="Card image cap"
+                        />
+                        </Link>
+                     
+                      </div>
+                      <div>
+                        <CardTitle style={{ fontWeight: "bold" }}>
+                          {" "}
+                          {u.name}
+                        </CardTitle>
+                        <CardSubtitle>Title : {u.title}</CardSubtitle>
+                        <CardText>{u.address}</CardText>
 
-                      {/* // backendden zaten sadece SENTED_REQUEST yada null geliyor */}
+                        {/* // backendden zaten sadece SENTED_REQUEST yada null geliyor */}
 
-                      {u.friendState === "SENTED_REQUEST" ? (
-                        <Button
-                          color="success"
-                          outline
-                          onClick={() => unFollow(u)}
-                        >
-                          Followed
-                        </Button>
-                      ) : (
-                        <Button onClick={() => follow(u)} color="success">
-                          Follow
-                        </Button>
-                      )}
-                    </div>
-                  </Card>
+                        {u.friendState === "SENTED_REQUEST" ? (
+                          <Button
+                            color="success"
+                            outline
+                            onClick={() => unFollow(u)}
+                          >
+                            Followed
+                          </Button>
+                        ) : (
+                          <Button onClick={() => follow(u)} color="success">
+                            Follow
+                          </Button>
+                        )}
+                      </div>
+                    </Card>
+                  </div>
                 ) : (
                   <div></div>
                 )

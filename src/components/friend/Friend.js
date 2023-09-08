@@ -10,11 +10,11 @@ import {
 } from "reactstrap";
 import '../../css/Friend.css'
 
-export default function Friend() {
+export default function Friend({setChangeId , changeId}) {
   const { id } = useParams();
+  const currentUserId = 202;
   const [friend, setFriend] = useState();
   const [friendListAll, setFriendListAll] = useState();
-  const [changeId , setChangeId] = useState();
   useEffect(() => {
     axios(`http://localhost:2020/users/user?id=${id}`).then((res) =>
       setFriend(res.data)
@@ -23,6 +23,7 @@ export default function Friend() {
       setFriendListAll(res.data)
     );
   }, [changeId]);
+
 
   return (
     <Container>
@@ -80,10 +81,12 @@ export default function Friend() {
         <Col xs="3">
           <Alert color="danger">{friend?.name + " Friends"}</Alert>
           <ListGroup>
+
             {friend?.friendList.map((ff) =>
               ff.friendState !== "WAIT" ? (
                 <ListGroupItem key={ff.id} color="info">
-                  <Link  to={`/${ff.userId}`} style={{textDecoration : "none" , color : "gray"}} onClick={ () => setChangeId(ff.userId)}>{ff.name}</Link>
+                  {ff.userId === currentUserId ? <Link  to={`/profile`} style={{textDecoration : "none" , color : "gray"}} onClick={ () => setChangeId(ff.userId)}>You</Link> :  <Link  to={`/${ff.userId}`} style={{textDecoration : "none" , color : "gray"}} onClick={ () => setChangeId(ff.userId)}>{ff.name}</Link>}
+                 
                 </ListGroupItem>
               ) : (
                 <div></div>

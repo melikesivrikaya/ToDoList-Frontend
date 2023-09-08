@@ -8,6 +8,7 @@ import Friend from "./components/friend/Friend";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NewNavi from "./components/navBar/NewNavi";
+import FriendControl from "./components/friend/FriendControl";
 function App() {
   const currentUserId = 202;
   const [user, setUser] = useState();
@@ -25,7 +26,7 @@ function App() {
           <Route path="users" Component={UserList}></Route>
           <Route path="setting" Component={Setting}></Route>
           <Route path="profile" Component={User}></Route>
-          <Route path=":id" Component={Friend}></Route>
+          <Route path=":id" Component={FriendControl}></Route>
         </Routes>
       </BrowserRouter>
     </div>
