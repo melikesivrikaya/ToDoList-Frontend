@@ -80,6 +80,7 @@ export const UserContextProvider = ({ children }) => {
   };
   const values = {
     users,
+    userId,
     userFriends,
     follow,
     unFollow,
@@ -88,6 +89,7 @@ export const UserContextProvider = ({ children }) => {
     rejectFriend,
     user,
     gallery,
+    setResponse
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

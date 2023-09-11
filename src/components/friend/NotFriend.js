@@ -1,95 +1,24 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, json, useParams } from "react-router-dom";
-import { Col, Container, ListGroup, Row, CardImg, Alert } from "reactstrap";
-import {
-  ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText,
-  Button,
-} from "reactstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import { Col, Container, Row, CardImg, Alert } from "reactstrap";
+import { Button } from "reactstrap";
 import "../../css/Friend.css";
+import { FriendContext } from "../../context/FriendContext";
 
 export default function NotFriend() {
   const { id } = useParams();
-  const currentUserId = 202;
   const [friend, setFriend] = useState();
 
-  const [response, setResponse] = useState({});
+  const { follow, unFollow, rejectFriend, acceptFriend, userId } =
+    useContext(UserContext);
+  const { getFriendState , friendstate } = useContext(FriendContext);
 
-  const follow = (friend) => {
-    const dataToPost = {
-      userId: friend.userId,
-      friendId: currentUserId,
-    };
-    console.log(dataToPost);
-    axios
-      .post("http://localhost:2020/friends", dataToPost)
-      .then((response) => {
-        console.log("Kayıt işlemi başarılı:", response.data);
-        setResponse(response.data);
-      })
-      .catch((error) => {
-        console.error("Kayıt işlemi başarısız:", error);
-      });
-  };
-  const unFollow = (friend) => {
-    const url = "http://localhost:2020/friends/friend";
-    const dataToDelete = { userId: friend.userId, friendId: currentUserId };
-    axios
-      .delete(url, {
-        data: dataToDelete,
-      })
-      .then((response) => {
-        console.log("Silme işlemi başarılı:", response);
-        setResponse(response);
-      })
-      .catch((error) => {
-        console.error("Silme işlemi başarısız:", error);
-      });
-  };
   useEffect(() => {
-    const data = {
-      userId: parseInt(id),
-      friendId: currentUserId,
-    };
-    console.log(data);
-    axios
-      .post(`http://localhost:2020/friends/friendState`, data)
-      .then((res) => setFriend(res.data));
-  }, [response]);
+    getFriendState(id);
+  }, []);
 
-  const acceptFriend = (friend) => {
-    const putData = {
-      id: friend.id,
-      friendState: 0,
-    };
-    console.log(putData);
-    axios
-      .put("http://localhost:2020/friends", putData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setResponse(response);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-      });
-  };
-
-  const rejectFriend = (friend) => {
-    axios
-      .delete(`http://localhost:2020/friends/pair/${friend.id}`)
-      .then((response) => {
-        console.log(response.data);
-        setResponse(response);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-      });
-  };
   return (
     <Container>
       <Row>
@@ -97,24 +26,24 @@ export default function NotFriend() {
           <CardImg
             className="friend-img"
             alt="Card image cap"
-            src={`${friend?.profilFotoUrl}`}
+            src={`${friendstate?.profilFotoUrl}`}
           />
         </Col>
         <Col xs="3">
           {" "}
-          <Alert color="danger">{friend?.name}</Alert>
-          <Alert color="danger">{friend?.title}</Alert>
+          <Alert color="danger">{friendstate?.name}</Alert>
+          <Alert color="danger">{friendstate?.title}</Alert>
           <Alert color="danger">{31}</Alert>
-          <Alert color="danger">{friend?.address}</Alert>
+          <Alert color="danger">{friendstate?.address}</Alert>
           <div>
-            {friend?.friendState === "SENTED_REQUEST" ? (
+            {friendstate?.friendState === "SENTED_REQUEST" ? (
               <Button color="success" outline onClick={() => unFollow(friend)}>
                 Followed
               </Button>
             ) : (
               <div>
                 {" "}
-                {friend?.friendState === "REQUEST" ? (
+                {friendstate?.friendState === "REQUEST" ? (
                   <div>
                     <Button
                       style={{ marginRight: 10 }}
@@ -131,12 +60,8 @@ export default function NotFriend() {
                   </div>
                 ) : (
                   <div>
-                    {friend?.friendState === null ? (
-                      <Button
-                        color="success"
-                    
-                        onClick={() => follow(friend)}
-                      >
+                    {friendstate?.friendState === null ? (
+                      <Button color="success" onClick={() => follow(friend)}>
                         Follow
                       </Button>
                     ) : (
