@@ -15,7 +15,6 @@ export default function ListTitle() {
 
   return (
     <ListGroup>
-      <h1>List Title</h1>
       {lists?.map((l, index) => (
         <div>
           <ListGroupItem

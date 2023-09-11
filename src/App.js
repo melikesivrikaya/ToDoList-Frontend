@@ -10,6 +10,7 @@ import axios from "axios";
 import NewNavi from "./components/navBar/NewNavi";
 import FriendControl from "./components/friend/FriendControl";
 import ListContextProvider from "./context/ListContext";
+import { UserContextProvider } from "./context/UserContext";
 function App() {
   const currentUserId = 202;
   const [user, setUser] = useState();
@@ -20,21 +21,21 @@ function App() {
   }, []);
   return (
     <div>
-      <ListContextProvider>
-        <BrowserRouter>
-          <NewNavi user={user}></NewNavi>
-          <Routes>
-            
-            <Route path="/" Component={Lists}></Route>
+      <UserContextProvider>
+        <ListContextProvider>
+          <BrowserRouter>
+            <NewNavi user={user}></NewNavi>
+            <Routes>
+              <Route path="/" Component={Lists}></Route>
 
-
-            <Route path="users" Component={UserList}></Route>
-            <Route path="setting" Component={Setting}></Route>
-            <Route path="profile" Component={User}></Route>
-            <Route path=":id" Component={FriendControl}></Route>
-          </Routes>
-        </BrowserRouter>
-      </ListContextProvider>
+              <Route path="users" Component={UserList}></Route>
+              <Route path="setting" Component={Setting}></Route>
+              <Route path="profile" Component={User}></Route>
+              <Route path=":id" Component={FriendControl}></Route>
+            </Routes>
+          </BrowserRouter>
+        </ListContextProvider>
+      </UserContextProvider>
     </div>
   );
 }

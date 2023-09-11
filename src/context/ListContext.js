@@ -99,13 +99,13 @@ const ListContextProvider = ({ children }) => {
   }
 
   const values = {
-    lists : list,
-    setResponse : setResponse,
-    postListTitle : postListTitle,
-    deleteListTitle : deleteListTitle,
+    lists : list ,
+    setResponse ,
+    postListTitle ,
+    deleteListTitle ,
     postTask :postTask,
-    deleteTask : deleteTask,
-    changeTaskState : changeTaskState
+    deleteTask ,
+    changeTaskState 
   };
 
   return <ListContext.Provider value={values}>{children}</ListContext.Provider>;
