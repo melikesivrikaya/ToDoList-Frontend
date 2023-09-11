@@ -11,6 +11,7 @@ import NewNavi from "./components/navBar/NewNavi";
 import FriendControl from "./components/friend/FriendControl";
 import ListContextProvider from "./context/ListContext";
 import { UserContextProvider } from "./context/UserContext";
+import { FriendContextProvider } from "./context/FriendContext";
 function App() {
   const currentUserId = 202;
   const [user, setUser] = useState();
@@ -21,13 +22,13 @@ function App() {
   }, []);
   return (
     <div>
+      <FriendContextProvider>
       <UserContextProvider>
         <ListContextProvider>
           <BrowserRouter>
             <NewNavi user={user}></NewNavi>
             <Routes>
               <Route path="/" Component={Lists}></Route>
-
               <Route path="users" Component={UserList}></Route>
               <Route path="setting" Component={Setting}></Route>
               <Route path="profile" Component={User}></Route>
@@ -35,7 +36,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </ListContextProvider>
-      </UserContextProvider>
+      </UserContextProvider></FriendContextProvider>
     </div>
   );
 }
