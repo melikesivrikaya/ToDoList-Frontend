@@ -1,50 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../css/List.css";
 import { Container, Input, Label, Button, Alert } from "reactstrap";
 import ListTitle from "./ListTitle";
-import axios from "axios";
+import { ListContext } from "../../context/ListContext";
 
 export default function Lists() {
-  const currentUserId = 202;
-  const [lists, setList] = useState();
   const [text, setText] = useState("");
-  const [listName, setListName] = useState("");
-  const [userId, setUserId] = useState(1);
-  const [response, setResponse] = useState({});
-
-  useEffect(() => {
-    axios(`http://localhost:2020/listtitles/${currentUserId}`).then((res) =>
-      setList(res.data)
-    );
-  }, [response]);
-  
-  useEffect(() => {
-    postListTitle();
-    setText("");
-  }, [listName]);
-  
-  useEffect(() => {
-    setUserId(currentUserId);
-  }, []);
-
-  const postListTitle = () => {
-    const postData = {
-      listName,
-      userId,
-    };
-    axios
-      .post("http://localhost:2020/listtitles", postData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setResponse(response);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-      });
-  };
+  const { postListTitle } = useContext(ListContext);
 
   return (
     <Container>
@@ -59,20 +21,18 @@ export default function Lists() {
           onChange={(i) => setText(i.target.value)}
         ></Input>
 
-        <Button onClick={(i) => setListName(text)} color="light">
+        <Button
+          onClick={(i) => {
+            postListTitle(text);
+            setText("");
+          }}
+          color="light"
+        >
           Create List Name
         </Button>
       </div>
 
-      {lists?.map((l, index) => (
-        <ListTitle
-          Lists={l}
-          index={index}
-          setList={setList}
-          id={userId}
-          setResponse={setResponse}
-        ></ListTitle>
-      ))}
+      <ListTitle></ListTitle>
     </Container>
   );
 }

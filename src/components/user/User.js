@@ -114,26 +114,7 @@ const getGallery = () => {
           <Col>
             {/* //<Alert color="info">{user?.name + " Friends"}</Alert> */}
             <Alert color="info">{"My Galeries"}</Alert>
-            {/* <ListGroup>
-              <ListGroupItemText>
-                {user?.friendList.map((f) =>
-                  f.friendState === "SUCCESS" ? (
-                    <ListGroupItem color="warning" action>
-                      <Link
-                        to={`/${f.userId}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <ListGroupItemHeading style={{ color: "gray" }}>
-                          {f.name}
-                        </ListGroupItemHeading>{" "}
-                      </Link>
-                    </ListGroupItem>
-                  ) : (
-                    <div></div>
-                  )
-                )}
-              </ListGroupItemText>
-            </ListGroup> */}
+        
             <div className="gallery-list">
                {gallery?.map(g => (
                   <CardImg
@@ -149,17 +130,21 @@ const getGallery = () => {
           </Col>
 
           <Col xs="3">
-            <Alert color="info">{"My Friends Request"}</Alert>
+       
             <ListGroup>
+                   <Alert color="info">{"My Friends Request"}</Alert>
               <ListGroupItemText>
                 {user?.friendList.map((f) =>
                   f.friendState === "REQUEST" ? (
-                    <ListGroupItem
+                   <div >
+                     <ListGroupItem
+                     key={f.id}
                       color="warning"
                       action
                       style={{ marginBottom: 20 }}
                     >
-                      <ListGroupItemHeading>
+                 
+                     <ListGroupItemHeading>
                         <Link
                           to={`/${f.userId}`}
                           style={{ textDecoration: "none", color: "gray" }}
@@ -176,11 +161,13 @@ const getGallery = () => {
                         {" "}
                         Kabul Et
                       </Button>
+                    
                       <Button onClick={() => rejectFriend(f)} color="danger">
                         {" "}
                         Red Et
                       </Button>
                     </ListGroupItem>
+                   </div>
                   ) : (
                     <div></div>
                   )

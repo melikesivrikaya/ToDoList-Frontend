@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../css/List.css";
 import {
   Button,
@@ -7,58 +7,27 @@ import {
   ListGroupItem,
   Row,
 } from "reactstrap";
-import axios from "axios";
-export default function Tasks({ listResponce, setResponse }) {
- 
+import { ListContext } from "../../context/ListContext";
+export default function Tasks({ tasks }) {
 
-  function deleteTask(itemId) {
-    axios
-      .delete(`http://localhost:2020/lists/list?id=${itemId}`)
-      .then((response) => {
-        setResponse(response);
-      })
-      .catch((error) => {
-        console.error("Silme işlemi hatası:", error);
-      });
-  }
-
-  function changeTaskState(taskId, st) {
-    const putData = {
-      id: taskId,
-      state: st,
-    };
-    console.log(putData);
-    axios
-      .put("http://localhost:2020/lists", putData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setResponse(response);
-      })
-      .catch((error) => {
-        console.error("Hata:", error);
-      });
-  }
+ const {changeTaskState , deleteTask} = useContext(ListContext);
 
   return (
     <div>
       <Row className="list-container">
         <Col className="list-title-card" xs="5">
            <h6 className="list-title-card-title">Yapılacaklar</h6>
-          {listResponce.map((li) =>
-            li.state == false ? (
+          {tasks?.map((task , index) =>
+            task.state == false ? (
              
               <div>
-                
-                <ListGroupItem action key={li.id}>
+                <ListGroupItem action key={index}>
                   <div className="list-task-item">
                     <div>
                       {" "}
                       <Button
                         onClick={() => {
-                          deleteTask(li.id);
+                          deleteTask(task.id);
                         }}
                         className="delete-button"
                         color="danger"
@@ -66,12 +35,12 @@ export default function Tasks({ listResponce, setResponse }) {
                       >
                         X
                       </Button>
-                      {li.task}
+                      {task.task}
                     </div>
                     <Input
                       className="task-input"
                       type="checkbox"
-                      onClick={() => changeTaskState(li.id, true)}
+                      onClick={() => changeTaskState(task.id, true)}
                     ></Input>
                   </div>
                 </ListGroupItem>
@@ -84,18 +53,17 @@ export default function Tasks({ listResponce, setResponse }) {
 
         <Col className="list-title-card" xs="5">
         <h6 className="list-title-card-title">Tamamlananlar</h6>
-          {listResponce.map((li) =>
-            li.state == true ? (
+          {tasks.map((task) =>
+            task?.state === true ? (
               <div>
-                  
-                <ListGroupItem action key={li.id}>
+                <ListGroupItem action key={task.id}>
                   <div className="list-task-item">
                     
                     <div>
                       {" "}
                       <Button
                         onClick={() => {
-                          deleteTask(li.id);
+                          deleteTask(task.id);
                         }}
                         className="delete-button"
                         color="danger"
@@ -103,13 +71,13 @@ export default function Tasks({ listResponce, setResponse }) {
                       >
                         X
                       </Button>
-                      {li.task}
+                      {task.task}
                     </div>
                     <Input
                       className="task-input"
                       type="checkbox"
                       defaultChecked
-                      onClick={() => changeTaskState(li.id, false)}
+                      onClick={() => changeTaskState(task.id, false)}
                     ></Input>
                   </div>
                 </ListGroupItem>
