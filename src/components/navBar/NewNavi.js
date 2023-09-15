@@ -21,11 +21,11 @@ export default function NewNavi() {
         </NavItem>
         <NavItem className="navi-item">
           <NavLink
-            href="profile"
+            href="setting"
             className="navi-link"
             style={{ color: "pink" }}
           >
-            Profile
+            Setting
           </NavLink>
         </NavItem>
       </Nav>

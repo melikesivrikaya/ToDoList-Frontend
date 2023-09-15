@@ -62,7 +62,9 @@ export default function ListTitle() {
               <Button
                 color="success"
                 outline
-                onClick={() => postTask(newTaskID, task)}
+                onClick={() => {postTask(newTaskID, task)
+                setTask("")}
+                }
               >
                 Create Task
               </Button>

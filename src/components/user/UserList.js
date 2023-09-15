@@ -12,7 +12,6 @@ import {
 import { Link } from "react-router-dom";
 import { Card, CardImg, CardText, CardTitle, CardSubtitle } from "reactstrap";
 import "../../css/User.css";
-import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 
 export default function UserList() {

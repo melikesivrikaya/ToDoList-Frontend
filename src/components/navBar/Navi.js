@@ -1,58 +1,60 @@
-import React, { useState } from "react";
-import { Nav, NavItem, NavLink } from "reactstrap";
+import React, { useContext } from "react";
+import { Nav, NavItem, NavLink, CardImg } from "reactstrap";
 import "../../css/Navi.css";
-
+import { Flex, useColorMode } from "@chakra-ui/react";
+import { UserContext } from "../../context/UserContext";
 export default function Navi() {
-  const [activeTab , setActiveTab] = useState("Profile")
+  const { user } = useContext(UserContext);
 
   return (
-    <div className="navi-container">
-    <Nav tabs fill>
-      <NavItem>
-        <NavLink 
-          href="/"
-          active={activeTab === "My Lists"}
-          style={{ color: "pink", fontWeight: "bold" }}
-       
-        >
-          My Lists
-        </NavLink>
-      </NavItem>
+    <div style={{ backgroundColor: "whitesmoke", marginBottom: 5 }}>
+      <Nav className="navi-container" style={{ alignItems: "center"}}>
+        <NavItem className="navi-item">
+          <NavLink href="/" className="navi-link" style={{ color: "pink" }}>
+            My List
+          </NavLink>
+        </NavItem>
+        
+        <NavItem className="navi-item">
+          <NavLink
+            href="/users"
+            className="navi-link"
+            style={{ color: "pink" }}
+          >
+            Users
+          </NavLink>
+        </NavItem>
+        <NavItem className="navi-item">
+          <NavLink
+            href="profile"
+            className="navi-link"
+            style={{ color: "pink" }}
+          >
+            Profile
+          </NavLink>
+        </NavItem>
+        <NavItem className="navi-item">
+          <NavLink
+            href="setting"
+            className="navi-link"
+            style={{ color: "pink" }}
+          >
+            Setting
+          </NavLink>
+        </NavItem>
 
-      <NavItem>
-        <NavLink
-          active={activeTab === "Users"}
-
-          href="users"
-          style={{ color: "pink", fontWeight: "bold" }}
-        >
-          Users
-        </NavLink>
-      </NavItem>
-
-      <NavItem>
-        <NavLink
-          active={activeTab === "Profile"}
-          href="profile"
-     
-          style={{ color: "pink", fontWeight: "bold" }}
-        >
-          Profile
-        </NavLink>
-      </NavItem>
-
-      {/* <NavItem>
-        <NavLink href="profile">Logout / Login</NavLink>
-      </NavItem>
-
-      <NavItem>
-        <NavLink href="setting">Setting</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="/">{this.props.user?.name}</NavLink>
-      </NavItem> */}
-    </Nav>
-  </div>
-  )
+        <div style={{display : "flex"}}>
+          <NavItem>
+            <CardImg
+              style={{ borderRadius: 30, width: 40, height: 40 }}
+              src={`${user?.profilFotoUrl}`}
+            />
+          </NavItem>{" "}
+          <NavItem className="navi-item" style={{ color: "#20c997" , marginLeft : 10}}>
+            {user?.name}
+          </NavItem>
+        </div>
+      </Nav>
+    </div>
+  );
 }
-

@@ -1,47 +1,19 @@
-import React from 'react'
-import { Button, Form, FormGroup, Label, Input, FormText ,Container,Col,Row} from 'reactstrap';
+import React, { useContext } from 'react'
+import { Button, Form, FormGroup, Label, Input, FormText ,Container,Col,Row,CardImg} from 'reactstrap';
+import { UserContext } from '../../context/UserContext';
 export default function Setting() {
+  const {user} = useContext(UserContext);
   return (
     <Container>
      <Row>
-      <Col xs="10">
-      <Form>
-        <FormGroup>
-          <Label for="exampleEmail">Name</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="name a placeholder" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleEmail">Email</Label>
-          <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="examplePassword">Password</Label>
-          <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleSelect">Select</Label>
-          <Input type="select" name="select" id="exampleSelect">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleSelectMulti">Select Multiple</Label>
-          <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleText">Text Area</Label>
-          <Input type="textarea" name="text" id="exampleText" />
-        </FormGroup>
+      <Col xs="4">
+      <CardImg
+              style={{ borderRadius: 20 }}
+              alt="Card image cap"
+              src={`${user?.profilFotoUrl}`}
+              width="100%"
+            />
+            
         <FormGroup>
           <Label for="exampleFile">File</Label>
           <Input type="file" name="file" id="exampleFile" />
@@ -50,33 +22,56 @@ export default function Setting() {
             It's a bit lighter and easily wraps to a new line.
           </FormText>
         </FormGroup>
+      </Col>
+      <Col xs="8">
+      <Form>
+        <FormGroup>
+          <Label for="exampleEmail">Name</Label>
+          <Input type="email" name="email" id="exampleEmail" placeholder={`${user.name}`} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleText">Bio</Label>
+          <Input type="textarea" name="text" id="exampleText" />
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleText">Age</Label>
+          <Input type="email" name="email" id="exampleEmail" placeholder={`${user.age}`} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleText">Address</Label>
+          <Input type="email" name="email" id="exampleEmail" placeholder={`${user.address}`} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleSelect">Title</Label>
+          <Input type="select" name="select" id="exampleSelect">
+            <option>ENGINEER</option>
+            <option>TEACHER</option>
+            <option>DOCTOR</option>
+            <option>OFFICER</option>
+            <option>STUDENT</option>
+            <option>RETIRED</option>
+            <option>JOBLESS</option>
+          </Input>
+        </FormGroup>
+    
+      
         <FormGroup tag="fieldset">
-          <legend>Radio Buttons</legend>
+          <legend>Gender</legend>
           <FormGroup check>
             <Label check>
               <Input type="radio" name="radio1" />{' '}
-              Option one is this and that—be sure to include why it's great
+              Male
             </Label>
           </FormGroup>
           <FormGroup check>
             <Label check>
               <Input type="radio" name="radio1" />{' '}
-              Option two can be something else and selecting it will deselect option one
+              Female
             </Label>
           </FormGroup>
-          <FormGroup check disabled>
-            <Label check>
-              <Input type="radio" name="radio1" disabled />{' '}
-              Option three is disabled
-            </Label>
-          </FormGroup>
+       
         </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" />{' '}
-            Check me out
-          </Label>
-        </FormGroup>
+       
         <Button>Submit</Button>
       </Form>
       </Col>

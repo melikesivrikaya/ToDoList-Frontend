@@ -12,6 +12,7 @@ import FriendControl from "./components/friend/FriendControl";
 import ListContextProvider from "./context/ListContext";
 import { UserContextProvider } from "./context/UserContext";
 import { FriendContextProvider } from "./context/FriendContext";
+import Login from "./components/login/Login";
 function App() {
   const currentUserId = 202;
   const [user, setUser] = useState();
@@ -26,13 +27,14 @@ function App() {
       <UserContextProvider>
         <ListContextProvider>
           <BrowserRouter>
-            <NewNavi user={user}></NewNavi>
+            <Navi user={user}></Navi>
             <Routes>
               <Route path="/" Component={Lists}></Route>
               <Route path="users" Component={UserList}></Route>
               <Route path="setting" Component={Setting}></Route>
               <Route path="profile" Component={User}></Route>
               <Route path=":id" Component={FriendControl}></Route>
+              <Route path="/setting" Component={Setting}></Route>
             </Routes>
           </BrowserRouter>
         </ListContextProvider>
